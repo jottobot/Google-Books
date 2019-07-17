@@ -1,14 +1,11 @@
-const axios = require("axios");
-const router = require("express").Router();
+// const axios = require("axios");
+// const router = require("express").Router();
 
-router.get("/search", (req, res) => {
-  axios
-    .get("http://www.recipepuppy.com/api/", { params: req.query })
-    .then(({ data: { results } }) => res.json(results))
-    .catch(err => res.status(422).json(err));
-});
+// router.get("/search", (req, res) => {
+//   axios
+//     .get("https://www.googleapis.com/books/v1/volumes", { params: req.query })
+//     .then(({ data: { results } }) => res.json(results))
+//     .catch(err => res.status(422).json(err));
+// });
 
-module.exports = router;
-
-
-// API KEY = AIzaSyALvwfjO80tHoaCR-nmWbh5gBgv08DfBYo
+// module.exports = router;

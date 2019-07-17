@@ -12,28 +12,35 @@ class Search extends Component {
     books: [],
   };
 
-  // When the component mounts, get a list of all available base breeds and update this.state.breeds
-  componentDidMount() {
-    API.getAllBooks()
-      .then(res => this.setState({ books: res.data.message }))
-      .catch(err => console.log(err));
-  }
-
+  // when user types in book search, this changes
   handleInputChange = event => {
     this.setState({ search: event.target.value });
   };
 
   handleFormSubmit = event => {
     event.preventDefault();
-    API.getBookTitles(this.state.search)
+    // use google books API to search for query
+    API.searchGoogleBooks(this.state.search)
       .then(res => {
         if (res.data.status === "error") {
           throw new Error(res.data.message);
         }
-        this.setState({ results: res.data.message, error: "" });
+        this.setState({ results: res.data.items, error: "" });
+        console.log(res.data.items);
+        
       })
       .catch(err => this.setState({ error: err.message }));
   };
+
+  handleSaveItem = (bookJSON) => {
+    if (bookJSON.title && bookJSON.author) {
+      API.saveBook(bookJSON)
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err));
+    }
+    console.log(bookJSON);
+  };
+
   render() {
     return (
       <div>
@@ -42,7 +49,7 @@ class Search extends Component {
           <h2>Search for and save your favorite books here!</h2>
         </Hero>
         <Container style={{ minHeight: "80%" }}>
-          <h1 className="text-center">Search by book title.</h1>
+          <h1 className="text-center">Search by book title</h1>
           <Alert
             type="danger"
             style={{ opacity: this.state.error ? 1 : 0, marginBottom: 10 }}
@@ -54,7 +61,9 @@ class Search extends Component {
             handleInputChange={this.handleInputChange}
             books={this.state.books}
           />
-          <SearchResults results={this.state.results} />
+           <SearchResults 
+          handleSaveItem = {this.handleSaveItem}
+          results={this.state.results}/>
         </Container>
       </div>
     );

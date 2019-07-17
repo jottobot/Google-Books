@@ -1,26 +1,17 @@
 import axios from "axios";
 
-// const googleAPIKey = process.env.REACT_APP_GOOGLE_API_KEY;
-const googleBooksApi = 'https://www.googleapis.com/books/v1/volumes';
-
-function googleBooksSearch(query) {
-  return `${googleBooksApi}?q=${query}`;
-}
 
 export default {
-  searchBooks: (query) => {
-    return axios.get(googleBooksSearch(query))
+  searchGoogleBooks: function(query) {
+    return axios.get("https://www.googleapis.com/books/v1/volumes?q=" + query);
   },
   // Gets all books
-  getBooks: function() {
+  getBooksDB: function() {
     return axios.get("/api/books");
   },
   // Gets the book with the given id
   getBook: function(id) {
     return axios.get("/api/books/" + id);
-  },
-  getBookByGoogleId: function(id) {
-    return axios.get("/api/books/googleid/" + id);
   },
   // Deletes the book with the given id
   deleteBook: function(id) {

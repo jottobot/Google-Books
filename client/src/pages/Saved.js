@@ -1,37 +1,64 @@
-import React from "react";
-import Container from "../components/Container";
+import React, { Component } from "react";
+import API from "../utils/API";
 import Row from "../components/Row";
 import Col from "../components/Col";
+import Container from "../components/Container";
+import SavedResults from "../components/SavedResults";
+import Alert from "../components/Alert";
 
-function Saved() {
-  return (
-    <div>
-      <Container style={{ marginTop: 30 }}>
-        <Row>
-          <Col size="md-12">
-            <h1>Saved Books!</h1>
-          </Col>
-        </Row>
-        <Row>
-          <Col size="md-12">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc aliquet diam tortor, id
-              consequat mauris ullamcorper eu. Orci varius natoque penatibus et magnis dis
-              parturient montes, nascetur ridiculus mus. Pellentesque et dui id justo finibus
-              sollicitudin at et metus. Ut feugiat tellus nec metus commodo, sed suscipit nisi
-              gravida. Duis eget vestibulum quam, ut porttitor sem. Donec sagittis mi sollicitudin
-              turpis semper, et interdum risus lobortis. Vestibulum suscipit nunc non egestas
-              tristique. Proin hendrerit efficitur malesuada. Mauris lorem urna, sodales accumsan
-              quam non, tristique tempor erat. Nullam non sem facilisis, tempus tortor sit amet,
-              volutpat nisl. Ut et turpis non nunc maximus mollis a vitae tortor. Pellentesque
-              mattis risus ac quam laoreet cursus. Praesent suscipit orci neque, vestibulum
-              tincidunt augue tincidunt non. Duis consequat mattis tortor vitae mattis.
-            </p>
-          </Col>
-        </Row>
-      </Container>
-    </div>
-  );
+class Saved extends Component {
+  state = {
+    search: "",
+    books: [],
+  };
+
+  componentDidMount() {
+    API.getBooksDB()
+      .then(res => this.setState({ results: res.data }))
+      .catch(err => console.log(err));
+  };
+
+  componentDidUpdate() {
+    API.getBooksDB()
+      .then(res => this.setState({ results: res.data }))
+      .catch(err => console.log(err));
+  };
+
+  DeleteBook = (id) => {
+    API.deleteBook(id)
+      .then(res => {
+        if (res.data.status === "error") {
+          throw new Error(res.data.message);
+        }
+      })
+      .catch(err => this.setState({ error: err.message }));
+  };
+
+  render() {
+    return (
+      <div>
+        <Container style={{ minHeight: "80%" }}>
+          <Row>
+            <Col size="md-12">
+              <h1>Saved Books!</h1>
+            </Col>
+          </Row>
+
+          <Alert
+            type="danger"
+            style={{ opacity: this.state.error ? 1 : 0, marginBottom: 10 }}
+          >
+            {this.state.error}
+          </Alert>
+          <SavedResults
+            // handleSaveItem = {this.saveItem}
+            results={this.state.results}
+            DeleteItem={this.DeleteItem} />
+          {/* <p>{JSON.stringify(this.state.results)}</p> */}
+        </Container>
+      </div>
+    );
+  }
 }
 
 export default Saved;
