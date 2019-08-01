@@ -22,7 +22,7 @@ mongoose.connect(MONGODB_URI || "mongodb://localhost/googlebooks", { useNewUrlPa
 
 // Send every other request to the React app
 // Define any API routes before this runs
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "./client/build/index.html"));
 });
 
