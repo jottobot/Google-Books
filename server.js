@@ -16,10 +16,9 @@ if (process.env.NODE_ENV === "production") {
 app.use(routes);
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks", { useNewUrlParser: true });
-// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/googlebooks";
-// mongoose.connect(MONGODB_URI);
-
+var MONGODB_URI = process.env.MONGODB_URI
+// Connect to the Mongo DB
+mongoose.connect(MONGODB_URI || "mongodb://localhost/googlebooks", { useNewUrlParser: true });
 
 // Send every other request to the React app
 // Define any API routes before this runs
@@ -31,9 +30,6 @@ app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
 });
 
-
-// Connect to the Mongo DB
-// mongoose.connect(process.env.MONGODB_URI || "mongodb://user:password1@ds351107.mlab.com:51107/heroku_rct5dgnp", { useNewUrlParser: true });
 
 // Start the API server
 app.listen(PORT, function() {
