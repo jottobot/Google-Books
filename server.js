@@ -18,7 +18,10 @@ app.use(routes);
 // Connect to the Mongo DB
 // var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/googlebooks";
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks", { useNewUrlParser: true });
+// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/googlebooks", { useNewUrlParser: true });
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/googlebooks";
+mongoose.connect(MONGODB_URI);
+
 
 // Send every other request to the React app
 // Define any API routes before this runs
@@ -32,7 +35,7 @@ app.listen(PORT, () => {
 
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://user:password1@ds351107.mlab.com:51107/heroku_rct5dgnp", { useNewUrlParser: true });
+// mongoose.connect(process.env.MONGODB_URI || "mongodb://user:password1@ds351107.mlab.com:51107/heroku_rct5dgnp", { useNewUrlParser: true });
 
 // Start the API server
 app.listen(PORT, function() {
