@@ -18,7 +18,11 @@ app.use(routes);
 // Connect to the Mongo DB
 var MONGODB_URI = process.env.MONGODB_URI
 // Connect to the Mongo DB
-mongoose.connect(MONGODB_URI || "mongodb://localhost/googlebooks", { useNewUrlParser: true });
+// mongoose.connect(MONGODB_URI || "mongodb://localhost/googlebooks", { useNewUrlParser: true });
+
+mongoose.connect(MONGODB_URI || "mongodb://localhost/googlebooks", { useNewUrlParser: true })
+    .then(data=> console.log("Connected! ", data))
+    .catch(err=> console.log("ERROR: ", err))
 
 // Send every other request to the React app
 // Define any API routes before this runs
