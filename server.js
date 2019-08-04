@@ -16,13 +16,25 @@ if (process.env.NODE_ENV === "production") {
 app.use(routes);
 
 // Connect to the Mongo DB
-var MONGODB_URI = process.env.MONGODB_URI
-// Connect to the Mongo DB
-// mongoose.connect(MONGODB_URI || "mongodb://localhost/googlebooks", { useNewUrlParser: true });
+mongoose.Promise = global.Promise;
+mongoose
+  .connect(
+    process.env.MONGODB_URI ||
+    "mongodb://user:password1@ds151753.mlab.com:51753/heroku_7f0wztx2",
+    { useNewUrlParser: true }
+  )
+  .then(() => {
+    console.log("Connected to Database");
+  })
+  .catch(err => {
+    console.log("Not Connected to Database ERROR! ", err);
+  });
 
-mongoose.connect(MONGODB_URI || "mongodb://localhost:27017/googlebooks", { useNewUrlParser: true })
-    .then(data=> console.log("Connected! ", data))
-    .catch(err=> console.log("ERROR: ", err))
+// Connect to the Mongo DB
+// var MONGODB_URI = process.env.MONGODB_URI
+// mongoose.connect(MONGODB_URI || "mongodb://localhost/googlebooks", { useNewUrlParser: true })
+//     .then(data=> console.log("Connected! ", data))
+//     .catch(err=> console.log("ERROR: ", err))
 
 // Send every other request to the React app
 // Define any API routes before this runs
