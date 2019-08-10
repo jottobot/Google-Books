@@ -10,6 +10,8 @@ class Search extends Component {
   state = {
     search: "",
     books: [],
+    results: [],
+    error: ""
   };
 
   // when user types in book search, this changes

@@ -10,23 +10,37 @@ class Saved extends Component {
   state = {
     search: "",
     books: [],
+    results: [],
+    error: ""
   };
 
+  // won't run until it's initially run one time 
   componentDidMount() {
-    API.getBooksDB()
-      .then(res => this.setState({ results: res.data }))
-      .catch(err => console.log(err));
+    this.getSavedBooks();
   };
 
-  componentDidUpdate() {
+  getSavedBooks() {
     API.getBooksDB()
       .then(res => this.setState({ results: res.data }))
       .catch(err => console.log(err));
-  };
+  }
+
+  // componentDidMount() {
+  //   API.getBooksDB()
+  //     .then(res => this.setState({ results: res.data }))
+  //     .catch(err => console.log(err));
+  // };
+
+  // componentDidUpdate() {
+  //   API.getBooksDB()
+  //     .then(res => this.setState({ results: res.data }))
+  //     .catch(err => console.log(err));
+  // };
 
   DeleteBook = (id) => {
     API.deleteBook(id)
       .then(res => {
+        this.getSavedBooks(API);
         if (res.data.status === "error") {
           throw new Error(res.data.message);
         }
