@@ -36,12 +36,23 @@ class Search extends Component {
 
   handleSaveItem = (bookJSON) => {
     if (bookJSON.title && bookJSON.author) {
+      let savedBooks = this.state.bookJSON
+      // savedBooks = savedBooks[0];
       API.saveBook(bookJSON)
         .then(res => console.log(res.data))
         .catch(err => console.log(err));
     }
     console.log(bookJSON);
   };
+
+//   handleSaveItem = event => {
+//     console.log(this.state.books)
+//     let savedBooks = this.state.results.filter(bookJSON => bookJSON.id === event.target.id)
+//     savedBooks = savedBooks[0];
+//     API.saveBook(savedBooks)
+//         .then(this.setState({ message: alert("Your book is saved") }))
+//         .catch(err => console.log(err))
+// }
 
   render() {
     return (
