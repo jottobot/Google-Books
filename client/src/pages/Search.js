@@ -35,7 +35,7 @@ class Search extends Component {
   };
 
   handleSaveItem = (bookJSON) => {
-    if (bookJSON.title && bookJSON.author) {
+    if (bookJSON.title && bookJSON.authors) {
       let savedBooks = this.state.bookJSON
       // savedBooks = savedBooks[0];
       API.saveBook(bookJSON)
