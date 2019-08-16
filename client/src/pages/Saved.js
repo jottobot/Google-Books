@@ -4,29 +4,33 @@ import Hero from "../components/Hero";
 import Container from "../components/Container";
 import SavedResults from "../components/SavedResults";
 import Alert from "../components/Alert";
+// import Axios from "axios";
 
 class Saved extends Component {
   state = {
-    savedBooks: [],
-    title: "",
-    authors: "",
-    description: "",
-    image: "",
-    link: ""
+    search: "",
+    breeds: [],
+    results: [],
+    error: "",
+    link:""
   };
 
-  //when this component mounts, grab all books that were save to the database 
+  //when this component mounts, grab all books that were saved to the database 
   componentDidMount() {
-    API.getBooksDB()
-      .then(res => this.setState({ savedBooks: res.data }))
-      .catch(err => console.log(err))
-  }
+    this.getSavedBooks();
+  };
 
   //function to remove book by id
   handleDeleteButton = id => {
     API.deleteBook(id)
       .then(res => this.componentDidMount())
       .catch(err => console.log(err))
+  }
+
+  getSavedBooks(){
+    API.getBooksDB()
+    .then(res => this.setState({results:res.data}))
+    .catch(err => console.log(err));
   }
 
   render() {
@@ -45,7 +49,7 @@ class Saved extends Component {
             {this.state.error}
           </Alert>
 
-          <SavedResults savedBooks={this.state.savedBooks} handleDeleteButton={this.handleDeleteButton} />
+          <SavedResults results={this.state.results} handleDeleteButton={this.handleDeleteButton} />
 
         </Container>
       </div>

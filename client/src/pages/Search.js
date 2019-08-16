@@ -34,25 +34,23 @@ class Search extends Component {
       .catch(err => this.setState({ error: err.message }));
   };
 
-  handleSaveItem = (bookJSON) => {
-    if (bookJSON.title && bookJSON.authors) {
-      let savedBooks = this.state.bookJSON
-      // savedBooks = savedBooks[0];
-      API.saveBook(bookJSON)
+  // THIS DOESNT WORK, NEED TO FIX
+  // handleSaveItem = (bookJSON) => {
+  //   if (bookJSON.title && bookJSON.authors) {
+  //     API.saveBook(bookJSON)
+  //       .then(res => console.log("Here is the book you are saving:" + res.data))
+  //       .catch(err => console.log(err));
+  //   }
+  // };
+
+  saveItem = (itemJSON) => {
+    if (itemJSON.title && itemJSON.authors) {
+      API.saveBook(itemJSON)
         .then(res => console.log(res.data))
         .catch(err => console.log(err));
     }
-    console.log(bookJSON);
+    console.log(itemJSON);
   };
-
-//   handleSaveItem = event => {
-//     console.log(this.state.books)
-//     let savedBooks = this.state.results.filter(bookJSON => bookJSON.id === event.target.id)
-//     savedBooks = savedBooks[0];
-//     API.saveBook(savedBooks)
-//         .then(this.setState({ message: alert("Your book is saved") }))
-//         .catch(err => console.log(err))
-// }
 
   render() {
     return (
@@ -75,7 +73,7 @@ class Search extends Component {
             books={this.state.books}
           />
            <SearchResults 
-          handleSaveItem = {this.handleSaveItem}
+          handleSaveItem = {this.saveItem}
           results={this.state.results}/>
         </Container>
       </div>

@@ -1,5 +1,5 @@
+// import axios from "axios";
 import axios from "axios";
-
 
 export default {
   searchGoogleBooks: function(query) {
@@ -19,6 +19,8 @@ export default {
   },
   // Saves a book to the database
   saveBook: function(bookData) {
-    return axios.post("/api/books/saved", bookData);
+      // THIS ALSO DOES NOT WORK - CHANGE ROUTE
+    // return axios.post("/api/books/saved", bookData);
+    return axios.post("/api/books", bookData);
   },
 };
